@@ -5,6 +5,7 @@ package au.com.redbarn.animal.sentence.web.rest;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import au.com.redbarn.animal.sentence.domain.SentenceGenerationRequest;
+import au.com.redbarn.animal.sentence.generator.MarkovChain;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,10 +39,10 @@ public class SentenceGenerator {
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody String generateSentences(@ModelAttribute SentenceGenerationRequest req, @RequestPart(name = "file", required = false) MultipartFile file) {
 
-		log.info(Integer.toString(req.getPrefixLen()));
-		log.info(Integer.toString(req.getSuffixLen()));
-		log.info(Integer.toString(req.getNumberOfSentences()));
-		
+		log.debug("prefixLen: " + req.getPrefixLen());
+		log.debug("suffixLen: " + req.getSuffixLen());
+		log.debug("numberOfSentences: " + req.getNumberOfSentences());
+
 		if (file == null) {
 			log.warn("File is null!");
 		}
@@ -52,12 +54,12 @@ public class SentenceGenerator {
 		try {
 			byte[] bytes = file.getBytes();
 			String sampleText = new String(bytes);
-			log.info(Integer.toString(sampleText.length()));
+			log.debug("sampleText string length: " + sampleText.length());
+			MarkovChain markovChain = new MarkovChain(req.getPrefixLen(), req.getSuffixLen(), sampleText);
+			return markovChain.generate(req.getNumberOfSentences());
 		} catch (IOException e) {
 			log.error("Could not read input file.", e);
 			return "I could not read the file you sent me, please try another. The file must be in plain text.";
 		}
-
-		return "A few sentences.";
 	}
 }
