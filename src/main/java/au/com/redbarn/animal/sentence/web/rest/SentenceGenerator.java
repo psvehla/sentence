@@ -5,7 +5,6 @@ package au.com.redbarn.animal.sentence.web.rest;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,8 +31,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@ResponseStatus(HttpStatus.OK)
 @Slf4j
 public class SentenceGenerator {
+	
+	// TODO: catch MaxUploadSizeExceededException (1048576 bytes)
 
 	@PostMapping("/generate")
 	@ResponseStatus(HttpStatus.OK)
