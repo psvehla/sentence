@@ -35,15 +35,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SentenceGenerator {
 	
-	// TODO: catch MaxUploadSizeExceededException (1048576 bytes)
-
 	@PostMapping("/generate")
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody String generateSentences(@ModelAttribute SentenceGenerationRequest req, @RequestPart(name = "file", required = false) MultipartFile file) {
 
-		log.debug("prefixLen: " + req.getPrefixLen());
-		log.debug("suffixLen: " + req.getSuffixLen());
-		log.debug("numberOfSentences: " + req.getNumberOfSentences());
+		if (log.isDebugEnabled()) {
+			log.debug("Call parameters:");
+			log.debug("prefixLen: " + req.getPrefixLen());
+			log.debug("suffixLen: " + req.getSuffixLen());
+			log.debug("numberOfSentences: " + req.getNumberOfSentences());
+		}
 
 		if (file == null) {
 			log.warn("File is null!");

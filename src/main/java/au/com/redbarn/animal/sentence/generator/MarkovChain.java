@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -105,15 +106,8 @@ public class MarkovChain {
 		text.append(prefix).append(" ");
 
 		while (numberOfSentences < desiredNumberOfSentences) {
-
 			var suffix = getSuffix(prefix);
-
-			// TODO: This is wrong. We're counting too many sentences as the window slides along the same full stop. Just count the sentences, like you do in MarkovChainTest.
-			if (prefix.contains(".") || suffix.contains(".")) {
-				numberOfSentences++;
-			}
-
-			log.debug("prefix: " + prefix + " suffix: " + suffix);
+			numberOfSentences = SentenceUtils.countSentences(text.toString());
 			text.append(suffix).append(" ");
 			prefix =  getNewPrefix(text.toString());
 		}

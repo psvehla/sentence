@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
@@ -50,13 +51,6 @@ public class MarkovChainTest {
 
 		MarkovChain markovChain = new MarkovChain(PREFIX_LEN, SUFFIX_LEN, sampleText);
 		var generatedText = markovChain.generate(NUMBER_OF_SENTENCES);
-//		assertEquals(NUMBER_OF_SENTENCES, countSentences(generatedText));	// TODO: fix MarkovChain so that this passes
-	}
-
-	private int countSentences(String text) {
-		log.debug(text);
-		var sentences = text.split("\\.");	// TODO: add ? and !
-		log.debug("sentence length: " + sentences.length);
-		return sentences.length;
+		assertEquals(NUMBER_OF_SENTENCES, SentenceUtils.countSentences(generatedText));
 	}
 }

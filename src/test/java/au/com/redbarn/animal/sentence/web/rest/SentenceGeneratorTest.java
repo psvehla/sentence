@@ -19,6 +19,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import au.com.redbarn.animal.sentence.domain.SentenceGenerationRequest;
+import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 
 /**
  * Generates sentences based on provided text.
@@ -35,6 +36,7 @@ public class SentenceGeneratorTest {
 	void generateSentences() {
 
 		final String TEST_FILENAME = "alice_oz.txt";
+		final int NUMBER_OF_SENTENCES = 3;
 
 		var name = TEST_FILENAME;
 		var originalFileName = TEST_FILENAME;
@@ -64,12 +66,12 @@ public class SentenceGeneratorTest {
 		var testReq = new SentenceGenerationRequest();
 		testReq.setPrefixLen(1);
 		testReq.setSuffixLen(2);
-		testReq.setNumberOfSentences(3);
+		testReq.setNumberOfSentences(NUMBER_OF_SENTENCES);
 		testReq.setSelectedFile(file);
 
 		SentenceGenerator sentenceGenerator = new SentenceGenerator();
 		String response = sentenceGenerator.generateSentences(testReq, file);
-//		assertEquals("A few sentences.", response);	// TODO: Fix this test when MarkovChain is working.
+		assertEquals(NUMBER_OF_SENTENCES, SentenceUtils.countSentences(response));
 	}
 
 	@Test
