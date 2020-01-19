@@ -14,10 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import au.com.redbarn.animal.sentence.utils.SentenceUtils;
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
-@Slf4j
 public class MarkovChainTest {
 
 	@Test

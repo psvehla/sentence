@@ -87,49 +87,4 @@ public class SentenceGeneratorTest {
 		String response = sentenceGenerator.generateSentences(testReq, null);
 		assertEquals("Please give me some text to work with.", response);
 	}
-
-//	@Test
-//	void generateSentencesUnreadableFile() {
-//
-//		final String TEST_FILENAME = "Rollie.jpg";
-//
-//		var name = TEST_FILENAME;
-//		var originalFileName = TEST_FILENAME;
-//		var contentType = "fred";
-//
-//		URL res = getClass().getClassLoader().getResource(TEST_FILENAME);
-//
-//		Path path = null;
-//
-//		try {
-//			path = Paths.get(res.toURI());
-//		} catch (URISyntaxException e) {
-//			fail();
-//		}
-//
-//		byte[] content = null;
-//
-//		try {
-//		    content = Files.readAllBytes(path);
-//		}
-//		catch (final IOException e) {
-//			fail();
-//		}
-//
-//		for (int i = 0; i < content.length; i++) {
-//			content[i] = (byte) 1000;
-//		}
-//
-//		MultipartFile file = new MockMultipartFile(name, originalFileName, contentType, content);
-//
-//		var testReq = new SentenceGenerationRequest();
-//		testReq.setPrefixLen(1);
-//		testReq.setSuffixLen(2);
-//		testReq.setNumberOfSentences(3);
-//		testReq.setSelectedFile(file);
-//
-//		SentenceGenerator sentenceGenerator = new SentenceGenerator();
-//		String response = sentenceGenerator.generateSentences(testReq, file);
-//		assertEquals("I could not read the file you sent me, please try another. The file must be in plain text.", response);
-//	}
 }

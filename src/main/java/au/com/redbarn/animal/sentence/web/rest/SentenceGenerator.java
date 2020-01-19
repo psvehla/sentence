@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @ResponseStatus(HttpStatus.OK)
 @Slf4j
 public class SentenceGenerator {
-	
+
 	@PostMapping("/generate")
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody String generateSentences(@ModelAttribute SentenceGenerationRequest req, @RequestPart(name = "file", required = false) MultipartFile file) {
@@ -57,7 +57,11 @@ public class SentenceGenerator {
 		try {
 			byte[] bytes = file.getBytes();
 			String sampleText = new String(bytes);
-			log.debug("sampleText string length: " + sampleText.length());
+
+			if (log.isDebugEnabled()) {
+				log.debug("sampleText string length: " + sampleText.length());
+			}
+
 			MarkovChain markovChain = new MarkovChain(req.getPrefixLen(), req.getSuffixLen(), sampleText);
 			return markovChain.generate(req.getNumberOfSentences());
 		} catch (IOException e) {

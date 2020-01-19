@@ -4,12 +4,13 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
 
 public class SentenceUtils {
 
-	private SentenceUtils() { }
+	private SentenceUtils() {
+		throw new IllegalStateException("This is a utility class containing only static methods. Do not instantiate.");
+	}
 
 	/**
 	 * Counts the number of distinct sentences in a passage of text.
@@ -18,6 +19,32 @@ public class SentenceUtils {
 	 * @return The number of sentences.
 	 */
 	public static int countSentences(String text) {
+		List<String> sentences = split(text);
+		return sentences.size();
+	}
+
+	/**
+	 * Trims sentence fragments from the start and end of a passage of text.
+	 *
+	 * @param text The passage of text.
+	 * @return The trimmed passage of text.
+	 */
+	public static String trim(String text) {
+
+		List<String> sentences = split(text);
+		sentences.remove(sentences.size() - 1);
+		sentences.remove(0);
+
+		return sentences.stream().collect(Collectors.joining(" "));
+	}
+
+	/**
+	 * Splits a passage of text into a list of sentences.
+	 *
+	 * @param text The passage of text.
+	 * @return A list of sentences from the text.
+	 */
+	private static List<String> split(String text) {
 
 		List<String> sentences = new ArrayList<>();
 
@@ -27,8 +54,8 @@ public class SentenceUtils {
 
 		for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary.next()) {
 			sentences.add(text.substring(start, end));
-	     }
+		}
 
-		return sentences.size();
+		return sentences;
 	}
 }
