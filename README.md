@@ -6,6 +6,7 @@ This application generates sentences based on the provided text. It uses a Marko
 Requires:
 * Java 13
 * Maven
+* Port 8080
 
 To run:
 
