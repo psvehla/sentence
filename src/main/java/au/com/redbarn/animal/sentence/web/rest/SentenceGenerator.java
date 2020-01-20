@@ -37,7 +37,7 @@ public class SentenceGenerator {
 
 	@PostMapping("/generate")
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody String generateSentences(@ModelAttribute SentenceGenerationRequest req, @RequestPart(name = "file", required = false) MultipartFile file) {
+	public @ResponseBody String generateSentences(@ModelAttribute SentenceGenerationRequest req, @RequestPart(name = "file", required = true) MultipartFile file) {
 
 		if (log.isDebugEnabled()) {
 			log.debug("Call parameters:");
@@ -64,9 +64,14 @@ public class SentenceGenerator {
 
 			MarkovChain markovChain = new MarkovChain(req.getPrefixLen(), req.getSuffixLen(), sampleText);
 			return markovChain.generate(req.getNumberOfSentences());
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			log.error("Could not read input file.", e);
 			return "I could not read the file you sent me, please try another. The file must be in plain text.";
+		}
+		catch (Exception e) {
+			log.error("Unhandled exception: ", e);
+			return "An error occurred on the server, please try again later.";
 		}
 	}
 }

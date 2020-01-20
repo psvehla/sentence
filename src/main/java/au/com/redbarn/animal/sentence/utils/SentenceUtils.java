@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * A collection of utilities related to the processing and manipulation of sentences in text.
+ *
+ * @author peter
+ *
+ */
 public class SentenceUtils {
 
 	private SentenceUtils() {
@@ -15,7 +21,7 @@ public class SentenceUtils {
 	/**
 	 * Counts the number of distinct sentences in a passage of text.
 	 *
-	 * @param text The text to count the sentences in.
+	 * @param text The text containing the sentences to count.
 	 * @return The number of sentences.
 	 */
 	public static int countSentences(String text) {

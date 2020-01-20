@@ -22,9 +22,7 @@ import au.com.redbarn.animal.sentence.domain.SentenceGenerationRequest;
 import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 
 /**
- * Generates sentences based on provided text.
- *
- * A Markov chain is generated from the uploaded text, which is then used to generate sentences.
+ * Tests for {@link SentenceGenerator}.
  *
  * @author peter
  *

@@ -15,6 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 
+/**
+ * Tests for {@link MarkovChain}.
+ *
+ * @author peter
+ *
+ */
 @SpringBootTest
 public class MarkovChainTest {
 

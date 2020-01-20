@@ -7,6 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Tests for {@link SentenceUtils}.
+ *
+ * @author peter
+ *
+ */
 @SpringBootTest
 @Slf4j
 public class SentenceUtilsTest {

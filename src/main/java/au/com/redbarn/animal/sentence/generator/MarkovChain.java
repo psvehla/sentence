@@ -11,6 +11,13 @@ import java.util.stream.Collectors;
 import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * This class defines a Markov chain that can generate sentences.
+ * Upon instantiation the class trains the Markov chain using the supplied algorithm parameters and sample text. It is then ready to accept requests to generate sentences.
+ *
+ * @author peter
+ *
+ */
 @Slf4j
 public class MarkovChain {
 
@@ -62,7 +69,10 @@ public class MarkovChain {
 	private void train(String sampleText) {
 
 		List<String> wordList = Arrays.asList(sampleText.split(" "));
-		log.debug("Number of words: " + wordList.size());
+
+		if (log.isDebugEnabled()) {
+			log.debug("Number of words: " + wordList.size());
+		}
 
 		for (int i = 0; i < wordList.size() - this.prefixLen - this.suffixLen; i++) {
 
@@ -121,7 +131,7 @@ public class MarkovChain {
 			var suffix = getSuffix(prefix);
 			numberOfSentences = SentenceUtils.countSentences(text.toString());
 			text.append(suffix).append(" ");
-			prefix =  getNewPrefix(text.toString());
+			prefix = getNewPrefix(text.toString());
 		}
 
 		return SentenceUtils.trim(text.toString());
@@ -140,8 +150,8 @@ public class MarkovChain {
 
 	/**
 	 * Gets a suffix associated with the given prefix.
-	 * As per the algorithm, if there is more than one suffix associated with a prefix, I select one at random.
-	 * 
+	 * As per the Markov algorithm, if there is more than one suffix associated with a prefix, select one at random.
+	 *
 	 * @param prefix The prefix.
 	 * @return A suffix associated with the prefix.
 	 */
