@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import au.com.redbarn.animal.sentence.domain.SentenceGenerationRequest;
+import au.com.redbarn.animal.sentence.errors.AlgorithmBrokenException;
 import au.com.redbarn.animal.sentence.generator.MarkovChain;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,6 +65,10 @@ public class SentenceGenerator {
 
 			MarkovChain markovChain = new MarkovChain(req.getPrefixLen(), req.getSuffixLen(), sampleText);
 			return markovChain.generate(req.getNumberOfSentences());
+		}
+		catch (AlgorithmBrokenException e) {
+			log.error("The supplied text has broken the Markov algorithm implementation. Ideally, find out why and fix the algorithm so as to support a wider range of text.");
+			return "Sorry, something in the text you supplied has confused me. Please try another file.";
 		}
 		catch (IOException e) {
 			log.error("Could not read input file.", e);

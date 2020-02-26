@@ -31,16 +31,42 @@ import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 public class SentenceGeneratorTest {
 
 	@Test
-	void generateSentences() {
-
+	void generateAliceOzSentences() {
 		final String TEST_FILENAME = "alice_oz.txt";
 		final int NUMBER_OF_SENTENCES = 3;
+		assertEquals(NUMBER_OF_SENTENCES, generateSentences(TEST_FILENAME, NUMBER_OF_SENTENCES));
+	}
 
-		var name = TEST_FILENAME;
-		var originalFileName = TEST_FILENAME;
+	@Test
+	void generateNerdSentences() {
+		final String TEST_FILENAME = "nerd.txt";
+		final int NUMBER_OF_SENTENCES = 3;
+		final int ERROR_MESSAGE_NUMBER_OF_SENTENCES = 2;
+		assertEquals(ERROR_MESSAGE_NUMBER_OF_SENTENCES, generateSentences(TEST_FILENAME, NUMBER_OF_SENTENCES));
+	}
+
+	@Test
+	void generatePeterRabbitSentences() {
+		final String TEST_FILENAME = "PeterRabbit.txt";
+		final int NUMBER_OF_SENTENCES = 3;
+		assertEquals(NUMBER_OF_SENTENCES, generateSentences(TEST_FILENAME, NUMBER_OF_SENTENCES));
+	}
+
+	@Test
+	void generatePiSentences() {
+		final String TEST_FILENAME = "pi.txt";
+		final int NUMBER_OF_SENTENCES = 3;
+		final int ERROR_MESSAGE_NUMBER_OF_SENTENCES = 2;
+		assertEquals(ERROR_MESSAGE_NUMBER_OF_SENTENCES, generateSentences(TEST_FILENAME, NUMBER_OF_SENTENCES));
+	}
+
+	private int generateSentences(String testFilename, int numberOfSentences) {
+
+		var name = testFilename;
+		var originalFileName = testFilename;
 		var contentType = "text/plain";
 
-		URL res = getClass().getClassLoader().getResource(TEST_FILENAME);
+		URL res = getClass().getClassLoader().getResource(testFilename);
 
 		Path path = null;
 
@@ -64,12 +90,13 @@ public class SentenceGeneratorTest {
 		var testReq = new SentenceGenerationRequest();
 		testReq.setPrefixLen(1);
 		testReq.setSuffixLen(2);
-		testReq.setNumberOfSentences(NUMBER_OF_SENTENCES);
+		testReq.setNumberOfSentences(numberOfSentences);
 		testReq.setSelectedFile(file);
 
 		SentenceGenerator sentenceGenerator = new SentenceGenerator();
 		String response = sentenceGenerator.generateSentences(testReq, file);
-		assertEquals(NUMBER_OF_SENTENCES, SentenceUtils.countSentences(response));
+
+		return SentenceUtils.countSentences(response);
 	}
 
 	@Test

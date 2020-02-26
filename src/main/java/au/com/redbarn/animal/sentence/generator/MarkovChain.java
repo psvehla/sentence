@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import au.com.redbarn.animal.sentence.errors.AlgorithmBrokenException;
 import au.com.redbarn.animal.sentence.utils.SentenceUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -116,8 +117,10 @@ public class MarkovChain {
 	 *
 	 * @param desiredNumberOfSentences The number of desired sentences.
 	 * @return The desired sentences.
+	 *
+	 * @throws AlgorithmBrokenException when some kind of anomaly in the text breaks the Markov algorithm.
 	 */
-	public String generate(int desiredNumberOfSentences) {
+	public String generate(int desiredNumberOfSentences) throws AlgorithmBrokenException {
 
 		int numberOfSentences = 0;
 		var prefix = getRandomPrefix();
@@ -154,10 +157,17 @@ public class MarkovChain {
 	 *
 	 * @param prefix The prefix.
 	 * @return A suffix associated with the prefix.
+	 *
+	 * @throws AlgorithmBrokenException when some kind of anomaly in the text breaks the Markov algorithm.
 	 */
-	private String getSuffix(String prefix) {
+	private String getSuffix(String prefix) throws AlgorithmBrokenException {
 
 		List<String> suffixes = this.dictionary.get(prefix.trim());
+
+		if (suffixes == null) {
+			log.error("The supplied text has broken the Markov algorithm implementation. Ideally, find out why and fix the algorithm so as to support a wider range of text.");
+			throw new AlgorithmBrokenException("The supplied text has broken the Markov algorithm.");
+		}
 
 		if (suffixes.size() == 1) {
 			return suffixes.get(0);
